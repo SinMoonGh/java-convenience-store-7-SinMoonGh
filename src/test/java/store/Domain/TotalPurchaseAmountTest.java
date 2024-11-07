@@ -13,4 +13,13 @@ public class TotalPurchaseAmountTest {
 
         assertThat(totalPurchaseAmount.calculate()).isEqualTo(8000);
     }
+
+    @Test
+    void 상품_이름으로_가격_조회_동작_테스트() {
+        String name = "비타민워터";
+        int quantity = 8;
+        TotalPurchaseAmount totalPurchaseAmount = new TotalPurchaseAmount(name, quantity);
+
+        assertThat(totalPurchaseAmount.getPriceByName(name)).isEqualTo(1500);
+    }
 }
