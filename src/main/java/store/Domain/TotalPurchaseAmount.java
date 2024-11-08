@@ -1,30 +1,23 @@
 package store.Domain;
 
+import store.Utils.SearchProductName;
+
 public class TotalPurchaseAmount {
 
-    private final String name;
     private final int quantity;
+    private final SearchProductName searchProductName;
 
-    public TotalPurchaseAmount(String name, int quantity) {
-        this.name = name;
+    public TotalPurchaseAmount(int quantity, SearchProductName searchProductName) {
         this.quantity = quantity;
+        this.searchProductName = searchProductName;
     }
 
-    public Products findProductName(String productName) {
-        for (Products product : Products.values()) {
-            if (product.getName().equals(productName)) {
-                return product;
-            }
-        }
-        throw new IllegalArgumentException("해당 이름의 상품을 찾을 수 없습니다: " + productName);
-    }
-
-    public boolean checkProductsThatBenefit(Products product) {
-        return product.getPromotion() != null;
-    }
+//    public boolean checkProductsThatBenefit(Products product) {
+//        return product.getPromotion() != null;
+//    }
 
     public int calculate() {
-        int price = findProductName(name).getPrice();
+        int price = searchProductName.findProductName().getPrice();
         int sum = price * quantity;
 
         return sum;
