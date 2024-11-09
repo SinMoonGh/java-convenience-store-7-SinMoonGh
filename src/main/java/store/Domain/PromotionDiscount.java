@@ -1,45 +1,30 @@
 package store.Domain;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import store.Utils.SearchProductName;
+import java.time.LocalDateTime;
+import store.Utils.Inquiry;
 
 public class PromotionDiscount {
 
-    private final String name;
-    private final int quantity;
-    private final String now;
-    private final SearchProductName searchProductName;
+    //    private final int quantity;
+    private final LocalDate now;
+    private final Inquiry inquiry;
+    private final LocalDate promotionEndDate;
 
-    public PromotionDiscount(String name, int quantity, String now, SearchProductName searchProductName) {
-        this.name = name;
-        this.quantity = quantity;
+    public PromotionDiscount(LocalDateTime now, Inquiry inquiry) {
+        this.now = now.toLocalDate();
+        this.inquiry = inquiry;
+        this.promotionEndDate = inquiry.findPromotion().getEndDate();
+    }
+
+    public PromotionDiscount(LocalDate now, LocalDate promotionEndDate) {
         this.now = now;
-        this.searchProductName = searchProductName;
-    }
-
-    public Promotions findPromotion(String promotion) {
-        for (Promotions promotionValue : Promotions.values()) {
-            if (promotionValue.name().equals(promotion)) {
-                return promotionValue;
-            }
-        }
-        throw new IllegalArgumentException("해당 프로모션을 찾을 수 없습니다: " + promotion);
-    }
-
-    public LocalDate convertStringToLocalDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDate parsedDate = LocalDate.parse(now.substring(0, 10));
-
-        return parsedDate;
+        this.inquiry = null;
+        this.promotionEndDate = promotionEndDate;
     }
 
     public boolean checkTheEvent() {
-        String promotion = searchProductName.findPromotionsProductName().getPromotion();
-        LocalDate promotionEndDate = findPromotion(promotion).getEndDate();
-        LocalDate now = convertStringToLocalDate();
-        boolean eventGoingOn = !now.isAfter(promotionEndDate);
 
-        return eventGoingOn;
+        return !now.isAfter(promotionEndDate);
     }
 }
