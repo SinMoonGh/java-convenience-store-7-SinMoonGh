@@ -1,27 +1,33 @@
 package store.Domain;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import store.Utils.Inquiry;
 
 public class PromotionDiscount {
 
     private final int purchaseQuantity;
     private final LocalDate now;
-    private final Inquiry inquiry;
     private final LocalDate promotionEndDate;
+    private final int buy;
+    private final int get;
+    private final int price;
 
-    public PromotionDiscount(int purchaseQuantity, LocalDateTime now, Inquiry inquiry) {
+    public PromotionDiscount(int purchaseQuantity, Inquiry inquiry) {
         this.purchaseQuantity = purchaseQuantity;
-        this.now = now.toLocalDate();
-        this.inquiry = inquiry;
+        this.now = DateTimes.now().toLocalDate();
         this.promotionEndDate = inquiry.findPromotion().getEndDate();
+        this.buy = inquiry.findPromotion().getBuy();
+        this.get = inquiry.findPromotion().getGet();
+        this.price = inquiry.findPromotionsProductName().getPrice();
     }
 
     public PromotionDiscount(LocalDate now, LocalDate promotionEndDate) {
         this.purchaseQuantity = 0;
         this.now = now;
-        this.inquiry = null;
+        this.buy = 0;
+        this.get = 0;
+        this.price = 0;
         this.promotionEndDate = promotionEndDate;
     }
 
@@ -29,7 +35,13 @@ public class PromotionDiscount {
         return !now.isAfter(promotionEndDate);
     }
 
-    public boolean comparePurchaseQuantityAndPromotionBuy() {
-        return purchaseQuantity == inquiry.findPromotion().getBuy();
+    public int disCountPrice() {
+        int calculatePresentationProductQuantity = purchaseQuantity / (buy + get);
+        return calculatePresentationProductQuantity * price;
+    }
+
+    public boolean shouldAddBonusProduct() {
+        int remainder = purchaseQuantity % (buy + get);
+        return remainder == buy;
     }
 }
