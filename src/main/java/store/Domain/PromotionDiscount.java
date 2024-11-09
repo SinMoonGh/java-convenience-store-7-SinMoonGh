@@ -37,7 +37,7 @@ public class PromotionDiscount {
 
     public int disCountPrice() {
         int calculatePresentationProductQuantity = purchaseQuantity / (buy + get);
-        return calculatePresentationProductQuantity * price;
+        return calculatePresentationProductQuantity * price * get;
     }
 
     public boolean shouldAddBonusProduct() {
