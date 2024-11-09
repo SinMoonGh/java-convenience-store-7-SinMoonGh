@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import store.Utils.Inquiry;
 
 public class PromotionDiscountTest {
     @ParameterizedTest
@@ -21,4 +22,19 @@ public class PromotionDiscountTest {
 
         assertThat(promotionDiscount.checkTheEvent()).isEqualTo(result);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "콜라, 2, 0",
+            "오렌지주스, 3, 1800",
+            "감자칩, 2, 1500"
+    })
+    void disCountPrice_메서드_정상_동작_테스트(String product, int quantity, int result) {
+        Inquiry inquiry = new Inquiry(product);
+        PromotionDiscount promotionDiscount = new PromotionDiscount(quantity, inquiry);
+
+        assertThat(promotionDiscount.disCountPrice()).isEqualTo(result);
+    }
+
+    
 }
