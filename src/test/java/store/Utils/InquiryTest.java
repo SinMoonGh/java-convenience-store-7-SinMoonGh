@@ -3,17 +3,18 @@ package store.Utils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class SearchProductNameTest {
+public class InquiryTest {
     @Test
     void 상품_이름으로_가격_조회_동작_테스트() {
         String name = "비타민워터";
-        SearchProductName searchProductName = new SearchProductName(name);
+        Inquiry inquiry = new Inquiry(name);
 
-        assertThat(searchProductName.findProductName().getPrice()).isEqualTo(1500);
+        assertThat(inquiry.findProductName().getPrice()).isEqualTo(1500);
     }
 
     @ParameterizedTest
@@ -23,10 +24,10 @@ public class SearchProductNameTest {
             "와우"
     })
     void 상품_조회_시_없는_상품이라면_IllegalArgumentException_예외_발생_테스트(String input) {
-        SearchProductName searchProductName = new SearchProductName(input);
+        Inquiry inquiry = new Inquiry(input);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            searchProductName.findProductName().getName();
+            inquiry.findProductName().getName();
         });
     }
 
@@ -38,15 +39,29 @@ public class SearchProductNameTest {
     })
     void 상품이_프로모션_혜택을_받는지_확인(String input, boolean expectedResult) {
         boolean result;
-        SearchProductName searchProductName = new SearchProductName(input);
+        Inquiry inquiry = new Inquiry(input);
 
         try {
-            searchProductName.findPromotionsProductName().getName();
+            inquiry.findPromotionsProductName().getName();
             result = true;
         } catch (IllegalArgumentException e) {
             result = false;
         }
 
         assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "콜라, 2024-12-31",
+            "오렌지주스, 2024-12-31",
+            "감자칩, 2024-11-30"
+    })
+    void findPromotion_메서드_정상_작동_테스트(String products, String promotions) {
+        Inquiry inquiry = new Inquiry(products);
+        
+        LocalDate endDate = inquiry.findPromotion().getEndDate();
+
+        assertThat(endDate).isEqualTo(promotions);
     }
 }
