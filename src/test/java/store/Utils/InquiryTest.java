@@ -37,8 +37,8 @@ public class SearchProductNameTest {
             "오렌지주스, true"
     })
     void 상품이_프로모션_혜택을_받는지_확인(String input, boolean expectedResult) {
-        SearchProductName searchProductName = new SearchProductName(input);
         boolean result;
+        SearchProductName searchProductName = new SearchProductName(input);
 
         try {
             searchProductName.findPromotionsProductName().getName();
