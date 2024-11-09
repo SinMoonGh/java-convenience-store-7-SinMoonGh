@@ -36,5 +36,16 @@ public class PromotionDiscountTest {
         assertThat(promotionDiscount.disCountPrice()).isEqualTo(result);
     }
 
-    
+    @ParameterizedTest
+    @CsvSource({
+            "콜라, 4, false",
+            "오렌지주스, 3, true",
+            "감자칩, 2, false"
+    })
+    void shouldAddBonusProduct_메서드_정상_동작_테스트(String product, int quantity, boolean result) {
+        Inquiry inquiry = new Inquiry(product);
+        PromotionDiscount promotionDiscount = new PromotionDiscount(quantity, inquiry);
+
+        assertThat(promotionDiscount.shouldAddBonusProduct()).isEqualTo(result);
+    }
 }
