@@ -42,7 +42,7 @@ public class InquiryTest {
         Inquiry inquiry = new Inquiry(input);
 
         try {
-            inquiry.findPromotionsProductName().getName();
+            inquiry.findPromotionsProductName();
             result = true;
         } catch (IllegalArgumentException e) {
             result = false;
@@ -59,7 +59,7 @@ public class InquiryTest {
     })
     void findPromotion_메서드_정상_작동_테스트(String products, String promotions) {
         Inquiry inquiry = new Inquiry(products);
-        
+
         LocalDate endDate = inquiry.findPromotion().getEndDate();
 
         assertThat(endDate).isEqualTo(promotions);
