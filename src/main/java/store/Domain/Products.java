@@ -5,6 +5,8 @@ public enum Products {
     COLA("콜라", 1000, 10, null),
     SODA("사이다", 1000, 7, null),
     WATER("물", 500, 10, null),
+    ORANGE_JUICE("오렌지주스", 1800, 0, null),
+    SPARKLING_WATER("탄산수", 1200, 0, null),
     VITAMIN_WATER("비타민워터", 1500, 6, null),
     POTATO_CHIPS("감자칩", 1500, 5, null),
     CHOCOLATE_BAR("초코바", 1200, 5, null),
