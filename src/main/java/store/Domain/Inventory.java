@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory {
-    private final Map<String, Integer> products;
-    private final Map<String, Integer> promotions;
+    private Map<String, Integer> products;
+    private Map<String, Integer> promotions;
 
     public Inventory() {
         this.products = new HashMap<>();
@@ -27,33 +27,19 @@ public class Inventory {
         }
     }
 
-    public int getProductQuantity(String productName) {
-        return products.getOrDefault(productName, 0);
+    public Map<String, Integer> getPromotions() {
+        return promotions;
     }
 
-    public int getPromotionProductQuantity(String productName) {
-        return promotions.getOrDefault(productName, 0);
+    public void setPromotions(Map<String, Integer> promotions) {
+        this.promotions = promotions;
     }
 
-    public void decreaseProductQuantity(String productName, int amount) {
-        int currentQuantity = products.getOrDefault(productName, 0);
-        if (currentQuantity >= amount) {
-            products.put(productName, currentQuantity - amount);
-        }
-
-        if (currentQuantity < amount) {
-            throw new IllegalArgumentException("상품 재고가 부족합니다.");
-        }
+    public Map<String, Integer> getProducts() {
+        return products;
     }
 
-    public void decreasePromotionProductQuantity(String productName, int amount) {
-        int currentQuantity = promotions.getOrDefault(productName, 0);
-        if (currentQuantity >= amount) {
-            promotions.put(productName, currentQuantity - amount);
-        }
-
-        if (currentQuantity < amount) {
-            throw new IllegalArgumentException("프로모션 상품 재고가 부족합니다.");
-        }
+    public void setProducts(Map<String, Integer> products) {
+        this.products = products;
     }
 }
