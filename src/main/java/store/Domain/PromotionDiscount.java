@@ -32,12 +32,22 @@ public class PromotionDiscount {
     }
 
     public boolean checkTheEvent() {
+        // 이벤트 시작 일자가 없음... 이벤트 전체 기간을 구해야 함.
         return !now.isAfter(promotionEndDate);
     }
 
     public int disCountPrice() {
         int calculatePresentationProductQuantity = purchaseQuantity / (buy + get);
-        return calculatePresentationProductQuantity * price * get;
+        return calculatePresentationProductQuantity * price * get; // get을 곱할 필요가 있나?
+    }
+
+    public int calculateRemainingQuantityAfterPromotion(int totalInventory) {
+        return totalInventory % (buy + get);
+    }
+
+    public int getFilteredProducts(int totalInventory) {
+        int calculate = totalInventory / (buy + get);
+        return calculate * (buy + get);
     }
 
     public boolean shouldAddBonusProduct() {
